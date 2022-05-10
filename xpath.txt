@@ -1,0 +1,9 @@
+#Web larepublica.com
+
+links = '//h2/a/@href'
+
+titulo = '//div[@class="mb-auto"]/h2/span/text()'
+resumen = '//div[@class="lead"]/p/text()'
+autor = '//div[@class="author-article"]/div/button/text()'
+cuerpo = '//div[@class="html-content"]/p[not(@class)]/text()'
+
