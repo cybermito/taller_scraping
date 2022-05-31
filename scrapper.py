@@ -1,9 +1,12 @@
+from datetime import datetime
 import requests #Esta librería nos permite realizar peticiones a la web
 import lxml.html as html #Esta librería nos permite convertir el código html en formato,
 #texto a un archivo especial para poder usar las expresiones XPATH
+import os, datetime
+
 
 #Guardamos la URL de la web a scrappear en una constante. 
-HOME_URL = 'https://www.larepublica.co/'
+HOME_URL = 'https://www.larepublica.co'
 
 #Guardamos las expresiones XPATH en constantes que usaremos después.
 XPATH_LINK_TO_ARTICLE = '//h2/a/@href'
@@ -19,9 +22,16 @@ def parse_home():
 
     try:
         response = requests.get(HOME_URL)
+        print(response.status_code)
         if response.status_code == 200:
             home = response.content.decode('utf8')
-            print(home)
+            parsed = html.fromstring(home)
+            #extraemos los links
+            links_noticias = parsed.xpath(XPATH_LINK_TO_ARTICLE)
+            print(links_noticias)
+
+        else:
+            raise ValueError(f'Error: {response.status_code}') 
 
     except ValueError as error:
         print(error)
@@ -29,7 +39,7 @@ def parse_home():
 def run():
     parse_home()
 
-if '__name__ ' == '__main__':
+if __name__ == '__main__':
     run()
 
 
